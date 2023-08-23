@@ -1,0 +1,29 @@
+{
+  "name": "funtoken",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000f\u0000u\u0000n\u0000t\u0000o\u0000k\u0000e\u0000n\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonard01/funtoken.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonard01/funtoken/issues"
+  },
+  "homepage": "https://github.com/leonard01/funtoken#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "chai": "^4.3.7",
+    "chai-http": "^4.4.0",
+    "chia": "^0.0.1",
+    "express": "^4.18.2",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1"
+  }
+}
