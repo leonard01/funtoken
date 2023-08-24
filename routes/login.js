@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 loginRoute.post("/", (req, res) => {
+  // check if user data json file exists and reads
   if (fs.existsSync(path.resolve(__dirname, "../data/mockedData.json"))) {
     let users = fs.readFileSync(
       path.resolve(__dirname, "../data/mockedData.json"),
