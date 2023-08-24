@@ -30,14 +30,11 @@ signUpRoute.post("/", (req, res) => {
     return;
   }
 
-  // sets username to lowercase
-  const userNameLowercase = JSON.stringify(
-    req.body.username
-  ).toLocaleLowerCase();
+  const userNameLowercase = req.body.username.toLowerCase();
 
   //creates new user data JSON
   const newUserData = {
-    username: JSON.parse(userNameLowercase),
+    username: userNameLowercase,
     password: req.body.password,
   };
 
@@ -56,10 +53,8 @@ signUpRoute.post("/", (req, res) => {
     );
   } else {
     // if account already exists, return error and exit
-    const json = JSON.parse(usersjson.toString());
-    if (
-      json.find(({ username }) => username == JSON.parse(userNameLowercase))
-    ) {
+    const json = JSON.parse(usersjson);
+    if (json.find(({ username }) => username == userNameLowercase)) {
       res.status(400);
       res.json("An account already exists with this username");
       return;

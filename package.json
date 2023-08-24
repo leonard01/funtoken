@@ -1,10 +1,12 @@
 {
   "name": "funtoken",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000f\u0000u\u0000n\u0000t\u0000o\u0000k\u0000e\u0000n\u0000\r\u0000 \u0000",
+  "description": "A simple login/signup node service with tests",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --exit",
+    "test-container": " docker build --tag api-server . && docker run -p 3030:3030 api-server && docker stop $(docker ps -q --filter ancestor=api-server)",
+    "stop-container": "docker stop $(docker ps -q --filter ancestor=api-server)"
   },
   "repository": {
     "type": "git",

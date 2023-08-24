@@ -10,7 +10,7 @@ const HOST_NAME = "0.0.0.0";
 const app = express();
 app.use(express.static("client"));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require("body-parser").json());
+app.use(bodyParser.json());
 
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);

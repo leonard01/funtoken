@@ -13,7 +13,9 @@ loginRoute.post("/", (req, res) => {
     const usersJson = JSON.parse(users.toString());
     // iterate over usersJsons to match username/password
     for (i in usersJson) {
-      if (usersJson[i].username == req.body.username) {
+      if (
+        usersJson[i].username.toLowerCase() == req.body.username.toLowerCase()
+      ) {
         if (usersJson[i].password == req.body.password) {
           res.json("Login Successful");
           return;
