@@ -1,11 +1,9 @@
-const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../src/server");
 const expect = chai.expect;
-const app = require("../src/server");
 chai.use(chaiHttp);
 
 const jsonPath = "../data/mockedData.json";
@@ -92,7 +90,7 @@ describe("Test signup", () => {
       });
   });
 
-  it("should it fail no username", (done) => {
+  it("should fail no username", (done) => {
     const userData = {
       username: "",
       password: validPassword1,
@@ -110,9 +108,27 @@ describe("Test signup", () => {
       });
   });
 
-  it("should it fail no password", (done) => {
+  it("should fail no password", (done) => {
     const userData = {
       username: validUserName1,
+      password: "",
+    };
+    chai
+      .request(server)
+      .post("/signup")
+      .send(userData)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.text).to.contain(
+          "Invalid password. Password must 8 characters or longer, at least one special, one uppercase, one lowercase character and one number"
+        );
+        done();
+      });
+  });
+
+  it("should fail no password or username", (done) => {
+    const userData = {
+      username: "",
       password: "",
     };
     chai

@@ -1,10 +1,8 @@
-const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../src/server");
-const app = require("../src/server");
 const expect = chai.expect;
 chai.use(chaiHttp);
 
@@ -17,6 +15,10 @@ const validPassword1 = "Password1!";
 const validPassword2 = "PASSWORd22&";
 const validPassword3 = "!!()pASSworD";
 const validPassword4 = '"PassworDis$!Valid4';
+const userNameDoesNotExist1 = "userDoesNotExist";
+const userNameDoesNotExist2 = "userDoesNotExist2";
+const passwordDoesNotExist1 = "PasswordMissing1!";
+const passwordDoesNotExist2 = "PasswordMissing2!";
 
 describe("Test login", () => {
   before(() => {
@@ -83,7 +85,7 @@ describe("Test login", () => {
       });
   });
 
-  it("should it fail when mixing username and password from different users", (done) => {
+  it("should fail when mixing username and password from different users", (done) => {
     const userData = {
       username: validUserName2,
       password: validPassword1,
@@ -99,7 +101,7 @@ describe("Test login", () => {
       });
   });
 
-  it("should it fail no username", (done) => {
+  it("should fail no username", (done) => {
     const userData = {
       username: "",
       password: validPassword1,
@@ -115,10 +117,58 @@ describe("Test login", () => {
       });
   });
 
-  it("should it fail no password", (done) => {
+  it("should fail no password", (done) => {
     const userData = {
       username: validUserName1,
       password: "",
+    };
+    chai
+      .request(server)
+      .post("/login")
+      .send(userData)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.text).to.contain("Incorrect Username/Password");
+        done();
+      });
+  });
+
+  it("should fail no password or username", (done) => {
+    const userData = {
+      username: "",
+      password: "",
+    };
+    chai
+      .request(server)
+      .post("/login")
+      .send(userData)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.text).to.contain("Incorrect Username/Password");
+        done();
+      });
+  });
+
+  it("should fail with incorrect username & password 1", (done) => {
+    const userData = {
+      username: userNameDoesNotExist1,
+      password: passwordDoesNotExist1,
+    };
+    chai
+      .request(server)
+      .post("/login")
+      .send(userData)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.text).to.contain("Incorrect Username/Password");
+        done();
+      });
+  });
+
+  it("should fail with incorrect username & password 2", (done) => {
+    const userData = {
+      username: userNameDoesNotExist2,
+      password: passwordDoesNotExist2,
     };
     chai
       .request(server)
